@@ -1,0 +1,57 @@
+<html>
+<head>
+    <script type="text/javascript" src="Vadersentimood.js"></script>
+    </head>
+
+<body>
+     
+     <textarea rows="4" cols="50" id="textstuff">
+Here is where you put in some text 
+</textarea>
+
+<button onclick="VaderSent()">Analyze</button>
+<h1 id="score"> Enter Your Text to be analyzed</h1>
+<div id="details" style="background-color: black;"></div>
+    <script>
+    	function VaderSent(){
+
+        var sentiment = new Sentimood();
+        //var analyze = sentiment.analyze();
+        //var positivity = sentiment.positivity();
+        //var negativity = sentiment.negativity();
+
+    var content=document.getElementById('textstuff').value;    
+
+    var result=sentiment.analyze(content);
+        console.log(result);
+        var scoreval=parseInt(result['score']);
+        if (scoreval>0){
+        	var colorval='rgb('+(155-(10*scoreval))+',255,0)';
+        }
+        else{
+        	var colorval='rgb(255,'+(155+(10*scoreval))+',0)';
+        }
+
+		     document.getElementById("details").innerHTML = "Sentiment score is: "+scoreval ;
+		     console.log(colorval);
+		     document.getElementById("details").style.color=colorval;
+
+        var poswords=result['positive']['words'];
+        var negwords=result['negative']['words'];
+
+        document.getElementById("score").innerHTML = JSON.stringify(result);
+
+
+
+   //positivity("This is so cool"); //Score: 1, Comparative:.25
+   // negativity("Hey you worthless scumbag"); //Score: 6, Comparative:1.5
+    /*sentiment.analyze("I am happy"); //Score: 3, Comparative: 1
+    sentiment.analyze("I am so happy"); //Score: 6, Comparative: 1.5
+    sentiment.analyze("I am extremely happy"); //Score: 12, Comparative: 3
+    sentiment.analyze("I am really sad"); //Score: -4, Comparative: -1*/
+    }
+    </script>
+
+   
+</body>
+</html>
